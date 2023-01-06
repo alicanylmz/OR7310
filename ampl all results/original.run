@@ -1,0 +1,34 @@
+model caldata_our_model.mod;
+data caldata.dat;
+option solver cplex;
+
+# LP relaxation
+#option relax_integrality 1;
+#solve;
+#display adm, Total_Cost > result_lp_relaxed.txt;
+#display adm, Total_Cost;
+
+# Mixed integer program (MIP) solver options
+option relax_integrality 0;
+option cplex_options 'mipdisplay 2 mipemphasis 3 mipinterval 1';
+option cplex_options "timelimit=600";
+solve;
+display adm,Total_Cost,flow0, flow1, flow2, flow3
+display adm,Total_Cost,flow0, flow1, flow2, flow3 > results_barr_lb.txt;
+
+
+
+# Mixed integer program (MIP) solver options
+option relax_integrality 0;
+option cplex_options 'mipdisplay 2 mipemphasis 3 mipinterval 1';
+solve;
+display adm,Total_Cost,flow0, flow1, flow2, flow3 > results_some_fixed.txt;
+
+
+#solve;
+
+# Mixed integer program (MIP) solver options
+option relax_integrality 0;
+option cplex_options 'mipdisplay 2 mipemphasis 3 mipinterval 1';
+solve;
+display adm,Total_Cost,flow0, flow1, flow2, flow3 > results_some_fixed_only_1s.txt;
